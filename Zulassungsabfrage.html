@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zulassung erfassen – Pangaea Life</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pangaea Life – Zulassung erfassen</title>
+    <meta name="color-scheme" content="light only" />
     <style>
       :root {
         --pl-blue: #004a99;
         --pl-acc: #1b5ef5;
         --pl-bg: #f3f5f7;
         --pl-text: #2b2b2b;
+        --pl-muted: #6b7280;
         --pl-card: #ffffff;
         --radius: 16px;
       }
 
-      * { box-sizing: border-box; }
       body {
         margin: 0;
         font-family: "Segoe UI", Roboto, Arial, sans-serif;
@@ -23,67 +24,80 @@
       }
 
       .container {
-        max-width: 560px;
+        max-width: 520px;
         margin: 5vh auto;
         background: var(--pl-card);
         border-radius: var(--radius);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
         overflow: hidden;
-        box-shadow: 0 14px 36px rgba(0,0,0,0.12);
       }
 
       .header {
         background: linear-gradient(135deg, var(--pl-blue) 0%, #0b57c2 100%);
-        padding: 24px 20px;
+        padding: 28px 24px 20px;
         text-align: center;
       }
 
       .logo {
-        max-width: 180px;
+        max-width: 190px;
         height: auto;
         display: block;
-        margin: 0 auto;
-      }
-
-      .content {
-        padding: 28px 24px;
+        margin: 0 auto 12px;
       }
 
       h1 {
-        color: var(--pl-blue);
+        font-size: 1.6rem;
         text-align: center;
-        font-size: 1.5rem;
-        margin-bottom: 16px;
+        color: var(--pl-blue);
+        margin-bottom: 10px;
+      }
+
+      form {
+        padding: 30px 26px;
       }
 
       label {
         display: block;
-        margin: 12px 0 6px 0;
+        margin: 12px 0 6px;
         font-weight: 600;
+        font-size: 15px;
       }
 
-      select, input[type="text"] {
+      select,
+      input[type="text"] {
         width: 100%;
-        padding: 12px 14px;
+        padding: 14px 16px;
         font-size: 16px;
-        border-radius: 10px;
         border: 1px solid #d9dde3;
-        margin-bottom: 18px;
+        border-radius: 12px;
+        background: #fdfdfd;
+        outline: none;
+        transition: 0.2s border, 0.2s box-shadow;
+      }
+
+      input:focus,
+      select:focus {
+        border-color: var(--pl-acc);
+        box-shadow: 0 0 0 4px rgba(27, 94, 245, 0.18);
       }
 
       .cta {
+        margin-top: 22px;
         width: 100%;
-        padding: 14px;
-        font-size: 16px;
+        padding: 16px;
+        font-size: 17px;
         font-weight: 700;
+        border: 0;
+        border-radius: 14px;
         color: #fff;
-        background: var(--pl-blue);
-        border: none;
-        border-radius: 10px;
+        background: linear-gradient(90deg, var(--pl-acc), var(--pl-blue));
         cursor: pointer;
+        box-shadow: 0 8px 20px rgba(27, 94, 245, 0.3);
       }
 
       .cta:hover {
-        background: #003377;
+        transform: translateY(-1px);
+        box-shadow: 0 10px 24px rgba(27, 94, 245, 0.34);
       }
 
       .success {
@@ -91,67 +105,96 @@
         text-align: center;
         color: #15803d;
         font-weight: 700;
-        margin-top: 16px;
+        margin-top: 18px;
       }
 
       .foot {
+        background: #f0f2f5;
+        border-top: 1px solid #e0e4ea;
+        padding: 18px 14px;
         text-align: center;
         font-size: 12px;
         color: #555;
-        background: #f0f2f5;
-        padding: 14px;
-        border-top: 1px solid #e0e4ea;
       }
     </style>
   </head>
+
   <body>
     <div class="container">
-      <!-- HEADER -->
       <div class="header">
-        <img class="logo" src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg" alt="Pangaea Life">
+        <img
+          class="logo"
+          src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg"
+          alt="Pangaea Life"
+        />
       </div>
 
-      <!-- CONTENT -->
-      <div class="content">
+      <form
+        id="zulassungForm"
+        action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+        method="POST"
+        target="hidden_iframe"
+      >
+        <input type="hidden" name="oid" value="00D06000001lc1a" />
+        <input type="hidden" name="retURL" value="" />
+
+        <!-- Hidden: Lead-ID -->
+        <input type="hidden" id="leadId" name="Lead_Id_External__c" />
+
         <h1>Zulassung erfassen</h1>
-        <p>Bitte teilen Sie uns mit, ob Sie eine Vermittlerzulassung besitzen. Die Informationen werden direkt in Salesforce übernommen.</p>
 
-        <!-- Unsichtbarer iFrame für Web-to-Lead -->
-        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+        <label for="Zulassung_vorhanden__c">Zulassung vorhanden?</label>
+        <select id="Zulassung_vorhanden__c" name="Zulassung_vorhanden__c" required>
+          <option value="" disabled selected>Bitte auswählen</option>
+          <option value="Ja">Ja</option>
+          <option value="Nein">Nein</option>
+        </select>
 
-        <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" target="hidden_iframe" autocomplete="on">
-          <input type="hidden" name="oid" value="00D06000001lc1a">
-          <input type="hidden" name="retURL" value="">
+        <div id="zulassungDetailsContainer" style="display: none;">
+          <label for="Zulassungsdetails__c">Zulassungsdetails</label>
+          <input
+            id="Zulassungsdetails__c"
+            name="Zulassungsdetails__c"
+            type="text"
+            maxlength="100"
+            placeholder="z. B. §34f Abs. 1 GewO"
+          />
+        </div>
 
-          <label for="Zulassung_vorhanden__c">Zulassung vorhanden?</label>
-          <select id="Zulassung_vorhanden__c" name="Zulassung_vorhanden__c" required>
-            <option value="" disabled selected>Bitte auswählen</option>
-            <option value="Ja">Ja</option>
-            <option value="Nein">Nein</option>
-          </select>
+        <button type="submit" class="cta">Zulassung speichern</button>
+        <div id="successMessage" class="success">✅ Danke! Ihre Angaben wurden gespeichert.</div>
+      </form>
 
-          <label for="Zulassungsdetails__c">Zulassungsdetails (falls vorhanden)</label>
-          <input id="Zulassungsdetails__c" name="Zulassungsdetails__c" type="text" maxlength="50" placeholder="Bitte eintragen">
+      <iframe name="hidden_iframe" id="hidden_iframe" style="display: none;"></iframe>
 
-          <button type="submit" class="cta">Zulassung speichern</button>
-
-          <div class="success" id="successMessage">✅ Danke! Ihre Angaben wurden erfolgreich übermittelt.</div>
-        </form>
-      </div>
-
-      <!-- FOOTER -->
       <div class="foot">
-        &copy; 2025 Pangaea Life GmbH
+        <strong>Pangaea Life GmbH</strong><br />
+        Thomas-Dehler-Straße 25, 81737 München<br />
+        Telefon: +49 89 123456-0  |  E-Mail: info@pangaea-life.de<br />
+        © 2025 Pangaea Life GmbH
       </div>
     </div>
 
     <script>
-      const form = document.querySelector('form');
-      const msg = document.getElementById('successMessage');
-      form.addEventListener('submit', () => {
-        msg.style.display = 'block';
-        setTimeout(() => form.reset(), 400);
-        setTimeout(() => msg.style.display = 'none', 5000);
+      // Lead-ID aus URL holen
+      const params = new URLSearchParams(window.location.search);
+      const leadId = params.get("leadId");
+      if (leadId) document.getElementById("leadId").value = leadId;
+
+      // Zulassungsdetails nur anzeigen, wenn "Ja"
+      const select = document.getElementById("Zulassung_vorhanden__c");
+      const details = document.getElementById("zulassungDetailsContainer");
+      select.addEventListener("change", () => {
+        details.style.display = select.value === "Ja" ? "block" : "none";
+      });
+
+      // Erfolgsnachricht anzeigen & Formular leeren
+      const form = document.getElementById("zulassungForm");
+      const msg = document.getElementById("successMessage");
+      form.addEventListener("submit", () => {
+        msg.style.display = "block";
+        setTimeout(() => form.reset(), 600);
+        setTimeout(() => (msg.style.display = "none"), 5000);
       });
     </script>
   </body>
