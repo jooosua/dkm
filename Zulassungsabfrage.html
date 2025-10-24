@@ -189,34 +189,38 @@
       </div>
     </div>
 
-    <script>
-      // Lead-ID aus URL holen & bereinigen
-      (function () {
-        const params = new URLSearchParams(window.location.search);
-        const rawId = params.get("leadId") || "";
-        const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0, 18);
+   <script>
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const rawId = params.get("leadId") || "";
 
-        const input = document.getElementById("Lead_Id_External__c");
-        if (input) input.value = cleanId;
-        console.log("Lead-ID erkannt:", cleanId);
-      })();
+    // 1. Entfernt alles, was kein Buchstabe oder Zahl ist
+    // 2. Schneidet sauber auf 18 Zeichen zu
+    const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0, 18);
 
-      // Detailsfeld nur zeigen, wenn "Ja" gewählt ist
-      const select = document.getElementById("Zulassung_vorhanden__c");
-      const details = document.getElementById("detailsField");
+    const input = document.getElementById("Lead_Id_External__c");
+    if (input) input.value = cleanId;
 
-      select.addEventListener("change", function () {
-        details.style.display = this.value === "Ja" ? "block" : "none";
-      });
+    console.log("Lead-ID erkannt:", cleanId);
+  })();
 
-      // Erfolgsmeldung + Reset
-      const form = document.getElementById("leadForm");
-      const msg = document.getElementById("successMessage");
-      form.addEventListener("submit", () => {
-        msg.style.display = "block";
-        setTimeout(() => form.reset(), 400);
-        setTimeout(() => (msg.style.display = "none"), 5000);
-      });
-    </script>
+  // Detailsfeld nur zeigen, wenn "Ja" gewählt ist
+  const select = document.getElementById("Zulassung_vorhanden__c");
+  const details = document.getElementById("detailsField");
+
+  select.addEventListener("change", function() {
+    details.style.display = this.value === "Ja" ? "block" : "none";
+  });
+
+  // Erfolgsmeldung anzeigen + Formular leeren
+  const form = document.getElementById("leadForm");
+  const msg = document.getElementById("successMessage");
+
+  form.addEventListener("submit", () => {
+    msg.style.display = "block";
+    setTimeout(() => form.reset(), 400);
+    setTimeout(() => (msg.style.display = "none"), 5000);
+  });
+</script>
   </body>
 </html>
