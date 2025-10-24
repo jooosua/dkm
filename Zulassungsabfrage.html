@@ -1,99 +1,148 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pangaea Life – Zulassung erfassen</title>
-  <style>
-    :root {
-      --pl-blue: #004a99;
-      --pl-acc: #1b5ef5;
-      --pl-bg: #f3f5f7;
-      --pl-text: #2b2b2b;
-      --pl-card: #ffffff;
-      --radius: 16px;
-    }
-    * { box-sizing: border-box; }
-    body { margin:0; font-family:"Segoe UI", Roboto, Arial; background: var(--pl-bg); color: var(--pl-text); }
-    .container { max-width:560px; margin:5vh auto; background: var(--pl-card); border-radius: var(--radius); overflow:hidden; box-shadow:0 14px 36px rgba(0,0,0,.12); }
-    .header { background: linear-gradient(135deg, var(--pl-blue) 0%, #0b57c2 100%); padding:28px 24px 20px; text-align:center; }
-    .logo { max-width:190px; height:auto; display:block; margin:0 auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,.2)); }
-    .content { padding:32px 28px 28px; }
-    h1 { margin:0 0 16px 0; font-size:1.5rem; color: var(--pl-blue); text-align:center; }
-    label { display:block; margin:14px 0 6px; font-weight:600; }
-    select, input[type="text"] { width:100%; padding:14px 16px; font-size:16px; border:1px solid #d9dde3; border-radius:12px; margin-bottom:16px; }
-    button { width:100%; padding:16px; font-size:17px; font-weight:700; border:0; border-radius:14px; background: linear-gradient(90deg,var(--pl-acc),var(--pl-blue)); color:#fff; cursor:pointer; }
-    .success { display:none; text-align:center; margin-top:16px; font-weight:700; color:#15803d; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pangaea Life – Zulassung erfassen</title>
+<style>
+:root {
+  --pl-blue: #004a99;
+  --pl-acc: #1b5ef5;
+  --pl-bg: #f3f5f7;
+  --pl-text: #2b2b2b;
+  --pl-card: #ffffff;
+  --radius: 16px;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  background: var(--pl-bg);
+  color: var(--pl-text);
+}
+.container {
+  max-width: 560px;
+  margin: 5vh auto;
+  background: var(--pl-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 14px 36px rgba(0,0,0,.12);
+}
+.header {
+  background: linear-gradient(135deg, var(--pl-blue) 0%, #0b57c2 100%);
+  padding: 28px 24px 20px;
+  text-align: center;
+}
+.logo {
+  max-width: 190px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+.content {
+  padding: 24px 28px 28px;
+}
+h1 {
+  margin: 10px 0 16px 0;
+  font-size: 1.6rem;
+  color: var(--pl-blue);
+  text-align: center;
+}
+label {
+  display: block;
+  margin: 14px 0 6px;
+  font-weight: 600;
+}
+select, input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 16px;
+  border: 1px solid #d9dde3;
+  border-radius: 12px;
+  background: #fdfdfd;
+  outline: none;
+}
+select:focus, input:focus {
+  border-color: var(--pl-acc);
+  box-shadow: 0 0 0 4px rgba(27,94,245,.18);
+}
+.cta {
+  margin-top: 18px;
+  width: 100%;
+  padding: 16px;
+  font-size: 17px;
+  font-weight: 800;
+  border: 0;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(90deg, var(--pl-acc), var(--pl-blue));
+  cursor: pointer;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+}
+.cta:hover { filter: brightness(1.05); }
+.hidden { display: none; }
+.foot {
+  background: #f0f2f5;
+  border-top: 1px solid #e0e4ea;
+  padding: 18px 14px;
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+}
+</style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <img class="logo" src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg" alt="Pangaea Life">
-    </div>
-    <div class="content">
-      <h1>Zulassung erfassen</h1>
-      <p>Bitte teilen Sie uns mit, ob Sie eine Vermittlerzulassung besitzen:</p>
-      <form id="zulassungForm">
-        <label for="hasLicense">Zulassung vorhanden?</label>
-        <select id="hasLicense" required>
-          <option value="" disabled selected>Bitte auswählen</option>
-          <option value="Ja">Ja</option>
-          <option value="Nein">Nein</option>
-        </select>
-
-        <div id="licenseDetailsDiv" style="display:none;">
-          <label for="licenseDetails">Zulassungsdetails</label>
-          <input type="text" id="licenseDetails" placeholder="Bitte Zulassung eintragen">
-        </div>
-
-        <button type="submit">Speichern</button>
-        <div class="success" id="successMsg">✅ Ihre Angaben wurden erfolgreich gespeichert!</div>
-      </form>
-    </div>
+<div class="container">
+  <div class="header">
+    <img class="logo" src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg" alt="Pangaea Life">
   </div>
+  <div class="content">
+    <h1>Zulassung erfassen</h1>
+    <form id="zulassungForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST">
+      <input type="hidden" name="oid" value="00D06000001lc1a">
+      <input type="hidden" name="retURL" value="https://jooosua.github.io/dkmtest/thanks.html">
+      <!-- Lead-ID aus der E-Mail -->
+      <input type="hidden" name="Id" id="leadId" value="">
+      
+      <label for="zulassung_vorhanden">Zulassung vorhanden?</label>
+      <select id="zulassung_vorhanden" name="00NW700000Fhdog" required>
+        <option value="">Bitte auswählen</option>
+        <option value="Ja">Ja</option>
+        <option value="Nein">Nein</option>
+      </select>
+      
+      <div id="zulassung_details_container" class="hidden">
+        <label for="zulassung_details">Zulassungsdetails</label>
+        <input type="text" id="zulassung_details" name="00NW700000FhfiS" maxlength="50">
+      </div>
+      
+      <button class="cta" type="submit">Zulassung speichern</button>
+    </form>
+  </div>
+  <div class="foot">
+    © 2025 Pangaea Life GmbH
+  </div>
+</div>
 
-  <script>
-    // Anzeige des Textfeldes nur wenn "Ja" ausgewählt
-    const hasLicense = document.getElementById('hasLicense');
-    const licenseDiv = document.getElementById('licenseDetailsDiv');
-    hasLicense.addEventListener('change', () => {
-      licenseDiv.style.display = hasLicense.value === 'Ja' ? 'block' : 'none';
-    });
+<script>
+// Lead-ID aus URL übernehmen
+const urlParams = new URLSearchParams(window.location.search);
+const leadId = urlParams.get('leadId');
+if (leadId) document.getElementById('leadId').value = leadId;
 
-    // REST-Call zu Salesforce
-    const form = document.getElementById('zulassungForm');
-    const successMsg = document.getElementById('successMsg');
-    const urlParams = new URLSearchParams(window.location.search);
-    const leadId = urlParams.get('leadId');
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const data = {
-        Id: leadId,
-        Zulassung_vorhanden__c: hasLicense.value,
-        Zulassungsdetails__c: document.getElementById('licenseDetails').value
-      };
-
-      try {
-        const response = await fetch('https://YOUR_SALESFORCE_INSTANCE/services/apexrest/updateLead/' + leadId, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          successMsg.style.display = 'block';
-          form.reset();
-          licenseDiv.style.display = 'none';
-        } else {
-          alert('Fehler beim Speichern, bitte versuchen Sie es später.');
-        }
-      } catch(err) {
-        console.error(err);
-        alert('Fehler beim Speichern, bitte versuchen Sie es später.');
-      }
-    });
-  </script>
+// Zulassungsdetails nur sichtbar bei Ja
+const select = document.getElementById('zulassung_vorhanden');
+const detailsContainer = document.getElementById('zulassung_details_container');
+select.addEventListener('change', function() {
+  if (this.value === 'Ja') {
+    detailsContainer.classList.remove('hidden');
+  } else {
+    detailsContainer.classList.add('hidden');
+  }
+});
+</script>
 </body>
 </html>
