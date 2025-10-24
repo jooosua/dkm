@@ -276,6 +276,14 @@
           <!-- Honeypot gegen Bots -->
           <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
           <div class="row">
+            <label for="salutation">Anrede*</label>
+<select id="Anrede__c" name="Anrede" required>
+  <option value="" disabled selected>Bitte auswählen</option>
+  <option value="Herr">Herr</option>
+  <option value="Frau">Frau</option>
+  <option value="Divers">Divers</option>
+</select>
+
             <div>
               <label for="first_name">Vorname*</label>
               <input id="first_name" name="first_name" type="text" maxlength="40" required autocapitalize="words" autocomplete="given-name" inputmode="text">
