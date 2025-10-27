@@ -8,23 +8,15 @@
     <style>
       :root {
         --pl-blue: #004a99;
-        /* Pangaea Life Blau (Header/Brand) */
         --pl-acc: #1b5ef5;
-        /* Akzent/CTA */
         --pl-bg: #f3f5f7;
-        /* Page BG */
         --pl-text: #2b2b2b;
-        /* Text */
         --pl-muted: #6b7280;
-        /* Muted text */
         --pl-card: #ffffff;
-        /* Card */
         --radius: 16px;
       }
 
-      * {
-        box-sizing: border-box;
-      }
+      * { box-sizing: border-box; }
 
       body {
         margin: 0;
@@ -34,151 +26,30 @@
         -webkit-font-smoothing: antialiased;
       }
 
-      .container {
-        max-width: 560px;
-        margin: 5vh auto;
-        background: var(--pl-card);
-        border-radius: var(--radius);
-        overflow: hidden;
-        box-shadow: 0 14px 36px rgba(0, 0, 0, .12);
+      .container { max-width: 560px; margin: 5vh auto; background: var(--pl-card); border-radius: var(--radius); overflow: hidden; box-shadow: 0 14px 36px rgba(0, 0, 0, .12); }
+
+      .header { background: linear-gradient(135deg, var(--pl-blue) 0%, #0b57c2 100%); padding: 28px 24px 20px; text-align: center; position: relative; }
+      .logo { max-width: 190px; height: auto; display: block; margin: 0 auto 12px; filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .2)); }
+      .badge { display: inline-block; background: rgba(255, 255, 255, .14); color: #fff; font-size: 12px; font-weight: 600; letter-spacing: .3px; padding: 6px 10px; border: 1px solid rgba(255, 255, 255, .3); border-radius: 999px; }
+      .content { padding: 32px 28px 28px; }
+
+      h1 { margin: 10px 0 10px; font-size: 1.6rem; line-height: 1.25; color: var(--pl-blue); text-align: center; }
+      .lead { text-align: center; color: #4b5563; margin: 0 auto 20px; font-size: 16px; line-height: 1.55; max-width: 46ch; }
+      .chips { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 10px 0 22px; }
+      .chip { font-size: 12px; color: #0f4aa2; background: #e9f1ff; border: 1px solid #d7e6ff; padding: 6px 10px; border-radius: 999px; font-weight: 600; }
+      .chip2 { font-size: 12px; color: #fff; background: #155f82; border: 1px solid #155f82; padding: 6px 10px; text-align: center; border-radius: 999px; font-weight: 600; }
+
+      label { display: block; margin: 14px 0 6px; font-weight: 600; font-size: 14px; }
+      select, input[type="text"], input[type="email"], input[type="tel"] {
+        width: 100%; padding: 14px 16px; font-size: 16px; border: 1px solid #d9dde3; border-radius: 12px; background: #fdfdfd; outline: none; transition: .2s border, .2s box-shadow;
       }
+      select { appearance: none; background-image: url('data:image/svg+xml;utf8,<svg fill="%236b7280" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>'); background-repeat: no-repeat; background-position: right 14px center; background-size: 16px; }
+      select:focus, input:focus { border-color: var(--pl-acc); box-shadow: 0 0 0 4px rgba(27, 94, 245, .18); }
 
-      /* Header / Brand */
-      .header {
-        background: linear-gradient(135deg, var(--pl-blue) 0%, #0b57c2 100%);
-        padding: 28px 24px 20px;
-        text-align: center;
-        position: relative;
-      }
+      .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+      @media (max-width:540px) { .row { grid-template-columns: 1fr; } }
 
-      .logo {
-        max-width: 190px;
-        height: auto;
-        display: block;
-        margin: 0 auto 12px;
-        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .2));
-      }
-
-      .badge {
-        display: inline-block;
-        background: rgba(255, 255, 255, .14);
-        color: #fff;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: .3px;
-        padding: 6px 10px;
-        border: 1px solid rgba(255, 255, 255, .3);
-        border-radius: 999px;
-      }
-
-      .content {
-        padding: 32px 28px 28px;
-      }
-
-      h1 {
-        margin: 10px 0 10px;
-        font-size: 1.6rem;
-        line-height: 1.25;
-        color: var(--pl-blue);
-        text-align: center;
-      }
-
-      .lead {
-        text-align: center;
-        color: #4b5563;
-        margin: 0 auto 20px;
-        font-size: 16px;
-        line-height: 1.55;
-        max-width: 46ch;
-      }
-
-      .chips {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        justify-content: center;
-        margin: 10px 0 22px;
-      }
-
-      .chip {
-        font-size: 12px;
-        color: #0f4aa2;
-        background: #e9f1ff;
-        border: 1px solid #d7e6ff;
-        padding: 6px 10px;
-        border-radius: 999px;
-        font-weight: 600;
-      }
-      
-      .chip2 {
-        font-size: 12px;
-        color: #fff;
-        background: #155f82;
-        border: 1px solid #155f82;
-        padding: 6px 10px;
-         text-align: center;
-        border-radius: 999px;
-        font-weight: 600;
-      }
-
-      label {
-        display: block;
-        margin: 14px 0 6px;
-        font-weight: 600;
-        font-size: 14px;
-      }
-
-      select {
-  width: 100%;
-  padding: 14px 16px;
-  font-size: 16px;
-  border: 1px solid #d9dde3;
-  border-radius: 12px;
-  background: #fdfdfd;
-  outline: none;
-  transition: .2s border, .2s box-shadow;
-  appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%236b7280" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position: right 14px center;
-  background-size: 16px;
-}
-
-select:focus {
-  border-color: var(--pl-acc);
-  box-shadow: 0 0 0 4px rgba(27, 94, 245, .18);
-}
-
-      input[type="text"],
-      input[type="email"],
-      input[type="tel"] {
-        width: 100%;
-        padding: 14px 16px;
-        font-size: 16px;
-        border: 1px solid #d9dde3;
-        border-radius: 12px;
-        background: #fdfdfd;
-        outline: none;
-        transition: .2s border, .2s box-shadow;
-      }
-
-      input:focus {
-        border-color: var(--pl-acc);
-        box-shadow: 0 0 0 4px rgba(27, 94, 245, .18);
-      }
-
-      .row {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 12px;
-      }
-
-      @media (max-width:540px) {
-        .row {
-          grid-template-columns: 1fr;
-        }
-      }
-
+      /* Anpassung Checkbox + Button Alignment */
       .checkbox {
         display: flex;
         gap: 10px;
@@ -187,84 +58,21 @@ select:focus {
         font-size: 14px;
         color: #333;
       }
+      .checkbox input { margin-top: 4px; width: 18px; height: 18px; flex-shrink: 0; }
+      .checkbox label { display: flex; flex-direction: column; margin: 0; font-weight: 400; }
+      .checkbox .note { font-size: 12px; color: var(--pl-muted); margin-top: 4px; }
 
-      .checkbox input {
-        margin-top: 3px;
-        width: 18px;
-        height: 18px;
-      }
+      .cta { margin-top: 18px; width: 100%; padding: 16px; font-size: 17px; font-weight: 800; border: 0; border-radius: 14px; color: #fff; background: linear-gradient(90deg, var(--pl-acc), var(--pl-blue)); cursor: pointer; box-shadow: 0 8px 20px rgba(27, 94, 245, .30); transition: .2s transform, .2s box-shadow, .2s filter; }
+      .cta:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(27, 94, 245, .34); }
+      .cta:active { transform: translateY(0); filter: brightness(.98); }
 
-      .note {
-        font-size: 12px;
-        color: var(--pl-muted);
-        margin-top: 4px;
-      }
+      .success { display: none; margin-top: 16px; text-align: center; color: #15803d; font-weight: 700; }
+      .foot { background: #f0f2f5; border-top: 1px solid #e0e4ea; padding: 18px 14px; text-align: center; font-size: 12px; color: #555; }
 
-      .cta {
-        margin-top: 18px;
-        width: 100%;
-        padding: 16px;
-        font-size: 17px;
-        font-weight: 800;
-        border: 0;
-        border-radius: 14px;
-        color: #fff;
-        background: linear-gradient(90deg, var(--pl-acc), var(--pl-blue));
-        cursor: pointer;
-        box-shadow: 0 8px 20px rgba(27, 94, 245, .30);
-        transition: .2s transform, .2s box-shadow, .2s filter;
-      }
+      .cobrand { display: flex; justify-content: center; align-items: center; gap: 10px; color: #e6f0ff; opacity: .95; margin-top: 10px; font-weight: 600; font-size: 12px; }
+      .cobrand span { opacity: .9; }
+      .cobrand img { height: 16px; width: auto; opacity: .9; filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .2)); }
 
-      .cta:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 10px 24px rgba(27, 94, 245, .34);
-      }
-
-      .cta:active {
-        transform: translateY(0);
-        filter: brightness(.98);
-      }
-
-      .success {
-        display: none;
-        margin-top: 16px;
-        text-align: center;
-        color: #15803d;
-        font-weight: 700;
-      }
-
-      .foot {
-        background: #f0f2f5;
-        border-top: 1px solid #e0e4ea;
-        padding: 18px 14px;
-        text-align: center;
-        font-size: 12px;
-        color: #555;
-      }
-
-      /* mini co-brand row (optional logo right) */
-      .cobrand {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        color: #e6f0ff;
-        opacity: .95;
-        margin-top: 10px;
-        font-weight: 600;
-        font-size: 12px;
-      }
-
-      .cobrand span {
-        opacity: .9;
-      }
-
-      .cobrand img {
-        height: 16px;
-        width: auto;
-        opacity: .9;
-        filter: drop-shadow(0 1px 3px rgba(0, 0, 0, .2));
-      }
     </style>
   </head>
   <body>
@@ -277,33 +85,35 @@ select:focus {
           <div class="chip2">Institutionelles Co-Invest für Privatanleger</div>
         </div>
       </div>
- <!-- CONTENT -->
+
+      <!-- CONTENT -->
       <div class="content">
         <h1>Nachhaltige Wohnimmobilien-Investments in den USA</h1>
         <p class="chip2"> Interessiert an unserem limitierten <strong>Co-Invest</strong> Angebot?</p>
-          <p class = "lead"> Registrieren Sie sich hier – wir senden Ihnen Basisinformationen zu und melden uns kurzfristig für den weiteren Austausch. </p>
+        <p class="lead"> Registrieren Sie sich hier – wir senden Ihnen Basisinformationen zu und melden uns kurzfristig für den weiteren Austausch. </p>
         <div class="chips">
           <div class="chip">Fokus: Wohnimmobilien (USA)</div>
           <div class="chip">Nachhaltiger Investmentansatz</div>
         </div>
+
         <!-- Unsichtbarer iFrame für silent submit -->
         <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
+
         <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" target="hidden_iframe" autocomplete="on">
-          <!-- Web-to-Lead Hidden -->
           <input type="hidden" name="oid" value="00D06000001lc1a">
           <input type="hidden" name="retURL" value="">
           <input type="hidden" name="lead_source" value="DKM 2025">
           <input type="hidden" name="campaign_id" value="701W700000Umv4LIAR">
-          <!-- Honeypot gegen Bots -->
           <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;opacity:0;" aria-hidden="true">
+
           <div class="row">
-           <label for="Anrede__c">Anrede*</label>
-<select id="Anrede__c" name="Anrede__c" required>
-  <option value="" selected hidden>Bitte auswählen</option>
-  <option value="Herr">Herr</option>
-  <option value="Frau">Frau</option>
-  <option value="Divers">Divers</option>
-</select>
+            <label for="Anrede__c">Anrede*</label>
+            <select id="Anrede__c" name="Anrede__c" required>
+              <option value="" selected hidden>Bitte auswählen</option>
+              <option value="Herr">Herr</option>
+              <option value="Frau">Frau</option>
+              <option value="Divers">Divers</option>
+            </select>
 
             <div>
               <label for="first_name">Vorname*</label>
@@ -314,43 +124,45 @@ select:focus {
               <input id="last_name" name="last_name" type="text" maxlength="80" required autocapitalize="words" autocomplete="family-name" inputmode="text">
             </div>
           </div>
+
           <label for="email">E-Mail*</label>
           <input id="email" name="email" type="email" maxlength="80" required autocomplete="email" inputmode="email">
+
           <label for="mobile">Mobiltelefon*</label>
           <input id="mobile" name="mobile" type="tel" maxlength="40" required autocomplete="tel" inputmode="tel">
+
           <label for="company">Firma (optional)</label>
           <input id="company" name="company" type="text" maxlength="80" autocomplete="organization" inputmode="text">
+
           <!-- Opt-in EINMALIG -->
           <div class="checkbox">
             <input type="checkbox" id="optin" name="Marketing_Opt_In__c" value="true" required>
-            <label for="optin"> Ich willige ein, dass Pangaea Life mich per E-Mail/Telefon zum Co-Invest informieren darf. <div class="note">Hinweis: Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</div>
+            <label for="optin">
+              Ich willige ein, dass Pangaea Life mich per E-Mail/Telefon zum Co-Invest informieren darf.
+              <div class="note">Hinweis: Sie können Ihre Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</div>
             </label>
           </div>
+
           <button class="cta" type="submit" aria-label="Jetzt registrieren">Begrenztes Kontingent</button>
           <div class="success" id="successMessage">✅ Danke! Ihre Daten wurden erfolgreich übermittelt.</div>
         </form>
       </div>
-      <!-- FOOTER / IMPRESSUM -->
+
+      <!-- FOOTER -->
       <div class="foot">
         <strong>Pangaea Life GmbH</strong>
-        <br> Thomas-Dehler-Straße 25, 81737 München <br> Telefon: +49&nbsp;89&nbsp;123456-0 &nbsp;|&nbsp; E-Mail: info@pangaea-life.de <br>
+        <br> Thomas-Dehler-Straße 25, 81737 München <br> Telefon: +49&nbsp;89&nbsp;6787-0 &nbsp;|&nbsp; E-Mail: info@pangaea-life.de <br>
         <span style="opacity:.85;">© 2025 Pangaea Life GmbH</span>
       </div>
     </div>
+
     <script>
       const form = document.getElementById('leadForm');
       const msg = document.getElementById('successMessage');
       form.addEventListener('submit', () => {
-        // Erfolg direkt anzeigen
         msg.style.display = 'block';
-        // Felder nach kurzer Zeit leeren (für Standbetrieb iPad)
-        setTimeout(() => {
-          form.reset();
-        }, 400);
-        // Erfolgsmeldung wieder ausblenden
-        setTimeout(() => {
-          msg.style.display = 'none';
-        }, 5000);
+        setTimeout(() => { form.reset(); }, 400);
+        setTimeout(() => { msg.style.display = 'none'; }, 5000);
       });
     </script>
   </body>
