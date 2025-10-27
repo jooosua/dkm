@@ -77,6 +77,10 @@
         box-sizing: border-box;
       }
 
+      select[multiple] {
+        height: auto;
+      }
+
       select:focus,
       input:focus {
         border-color: var(--pl-accent);
@@ -152,25 +156,26 @@
           <input type="hidden" name="oid" value="00D06000001lc1a" />
           <input type="hidden" name="retURL" value="" />
 
-          <!-- Wichtig: versteckte Lead-ID -->
+          <!-- Versteckte Lead-ID -->
           <input type="hidden" id="Lead_Id_External__c" name="Lead_Id_External__c" />
 
           <!-- Zulassung -->
-          <label for="Zulassung_vorhanden__c">Zulassung vorhanden?*</label>
-          <select id="Zulassung_vorhanden__c" name="Zulassung_vorhanden__c" required>
-            <option value="">– Bitte wählen –</option>
-            <option value="Ja">Ja</option>
-            <option value="Nein">Nein</option>
+          <label for="Zulassung_vorhanden__c">Ihre Vermittlerzulassung(en)*</label>
+          <select id="Zulassung_vorhanden__c" name="Zulassung_vorhanden__c" multiple required>
+            <option value="§ 34f Abs. 1 GewO">§ 34f Abs. 1 GewO</option>
+            <option value="§ 34f Abs. 2 GewO">§ 34f Abs. 2 GewO</option>
+            <option value="§ 34d GewO">§ 34d GewO</option>
+            <option value="Sonstige">Sonstige</option>
           </select>
 
           <div id="detailsField" style="display: none;">
-            <label for="Zulassungsdetails__c">Zulassungsdetails</label>
+            <label for="Zulassungsdetails__c">Bitte angeben:</label>
             <input
               id="Zulassungsdetails__c"
               name="Zulassungsdetails__c"
               type="text"
               maxlength="80"
-              placeholder="z. B. §34f GewO, §34d GewO ..."
+              placeholder="z. B. §34i GewO"
             />
           </div>
 
@@ -189,38 +194,34 @@
       </div>
     </div>
 
-   <script>
-  (function() {
-    const params = new URLSearchParams(window.location.search);
-    const rawId = params.get("leadId") || "";
+    <script>
+      // Lead-ID aus URL auslesen
+      (function() {
+        const params = new URLSearchParams(window.location.search);
+        const rawId = params.get("leadId") || "";
+        const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0, 18);
+        const input = document.getElementById("Lead_Id_External__c");
+        if (input) input.value = cleanId;
+      })();
 
-    // 1. Entfernt alles, was kein Buchstabe oder Zahl ist
-    // 2. Schneidet sauber auf 18 Zeichen zu
-    const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0, 18);
+      // Detailsfeld nur anzeigen, wenn "Sonstige" gewählt
+      const select = document.getElementById("Zulassung_vorhanden__c");
+      const details = document.getElementById("detailsField");
 
-    const input = document.getElementById("Lead_Id_External__c");
-    if (input) input.value = cleanId;
+      select.addEventListener("change", function() {
+        const selected = Array.from(select.selectedOptions).map(o => o.value);
+        details.style.display = selected.includes("Sonstige") ? "block" : "none";
+      });
 
-    console.log("Lead-ID erkannt:", cleanId);
-  })();
+      // Erfolgsmeldung + Formular zurücksetzen
+      const form = document.getElementById("leadForm");
+      const msg = document.getElementById("successMessage");
 
-  // Detailsfeld nur zeigen, wenn "Ja" gewählt ist
-  const select = document.getElementById("Zulassung_vorhanden__c");
-  const details = document.getElementById("detailsField");
-
-  select.addEventListener("change", function() {
-    details.style.display = this.value === "Ja" ? "block" : "none";
-  });
-
-  // Erfolgsmeldung anzeigen + Formular leeren
-  const form = document.getElementById("leadForm");
-  const msg = document.getElementById("successMessage");
-
-  form.addEventListener("submit", () => {
-    msg.style.display = "block";
-    setTimeout(() => form.reset(), 400);
-    setTimeout(() => (msg.style.display = "none"), 5000);
-  });
-</script>
+      form.addEventListener("submit", () => {
+        msg.style.display = "block";
+        setTimeout(() => form.reset(), 400);
+        setTimeout(() => (msg.style.display = "none"), 5000);
+      });
+    </script>
   </body>
 </html>
