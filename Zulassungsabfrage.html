@@ -66,17 +66,6 @@
         font-weight: 600;
       }
 
-      .checkbox-group {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-      }
-
-      .checkbox-group input[type="checkbox"] {
-        margin-right: 8px;
-        transform: scale(1.1);
-      }
-
       input[type="text"] {
         width: 100%;
         padding: 12px 14px;
@@ -85,13 +74,26 @@
         font-size: 16px;
         background: #fff;
         box-sizing: border-box;
-        margin-top: 6px;
       }
 
       input:focus {
         border-color: var(--pl-accent);
         box-shadow: 0 0 0 3px rgba(27, 94, 245, 0.15);
         outline: none;
+      }
+
+      .checkbox-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+
+      .checkbox-group label {
+        font-weight: normal;
+        display: flex;
+        align-items: center;
+        gap: 6px;
       }
 
       .cta {
@@ -135,20 +137,30 @@
     <div class="container">
       <!-- HEADER -->
       <div class="header">
-        <img class="logo" src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg" alt="Pangaea Life" />
+        <img
+          class="logo"
+          src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg"
+          alt="Pangaea Life"
+        />
       </div>
 
       <!-- CONTENT -->
       <div class="content" style="padding: 28px 26px 32px;">
         <h1>Zulassung erfassen</h1>
         <p class="lead">
-          Bitte teilen Sie uns Ihre Vermittlerzulassung mit, damit wir Sie künftig gezielt informieren können.
+          Bitte teilen Sie uns Ihre Vermittlerzulassung mit, damit wir Sie
+          künftig gezielt informieren können.
         </p>
 
         <!-- Unsichtbarer iFrame -->
         <iframe name="hidden_iframe" id="hidden_iframe" style="display: none;"></iframe>
 
-        <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" target="hidden_iframe">
+        <form
+          id="leadForm"
+          action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8"
+          method="POST"
+          target="hidden_iframe"
+        >
           <input type="hidden" name="oid" value="00D06000001lc1a" />
           <input type="hidden" name="retURL" value="" />
 
@@ -156,22 +168,30 @@
           <input type="hidden" id="Lead_Id_External__c" name="Lead_Id_External__c" />
 
           <!-- Zulassung -->
-          <label>Zulassung vorhanden?*</label>
+          <label>Zulassungsart*</label>
           <div class="checkbox-group">
-            <label><input type="checkbox" value="§34F1 GewO" class="zulassung" /> §34F1 GewO</label>
-            <label><input type="checkbox" value="§34F2 GewO" class="zulassung" /> §34F2 GewO</label>
-            <label><input type="checkbox" value="§35D GewO" class="zulassung" /> §35D GewO</label>
-            <label><input type="checkbox" value="Sonstige" id="sonstigeCheckbox" /> Sonstige</label>
+            <label><input type="checkbox" name="Zulassungsart__c" value="§34F1 GewO"> §34F1 GewO</label>
+            <label><input type="checkbox" name="Zulassungsart__c" value="§34F2 GewO"> §34F2 GewO</label>
+            <label><input type="checkbox" name="Zulassungsart__c" value="§35D GewO"> §35D GewO</label>
+            <label><input type="checkbox" id="sonstigeCheckbox" name="Zulassungsart__c" value="Sonstige"> Sonstige</label>
           </div>
 
           <!-- Textfeld für Sonstige -->
           <div id="detailsField" style="display: none;">
-            <label for="Zulassungsdetails__c">Zulassungsdetails</label>
-            <input id="Zulassungsdetails__c" name="Zulassungsdetails__c" type="text" maxlength="80" placeholder="z. B. weitere Zulassungen ..." />
+            <label for="Zulassung_Sonstige__c">Sonstige Zulassung(en)</label>
+            <input
+              id="Zulassung_Sonstige__c"
+              name="Zulassung_Sonstige__c"
+              type="text"
+              maxlength="80"
+              placeholder="z. B. andere Zulassung angeben"
+            />
           </div>
 
           <button class="cta" type="submit">Zulassung speichern</button>
-          <div class="success" id="successMessage">✅ Danke! Ihre Angaben wurden erfolgreich übermittelt.</div>
+          <div class="success" id="successMessage">
+            ✅ Danke! Ihre Angaben wurden erfolgreich übermittelt.
+          </div>
         </form>
       </div>
 
@@ -187,46 +207,38 @@
       (function() {
         const params = new URLSearchParams(window.location.search);
         const rawId = params.get("leadId") || "";
+
         const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0, 18);
+
         const input = document.getElementById("Lead_Id_External__c");
         if (input) input.value = cleanId;
       })();
 
-      // Sonstige Checkbox überwachen
-      const sonstigeCheckbox = document.getElementById("sonstigeCheckbox");
+      // Zeige Textfeld nur, wenn Sonstige ausgewählt
+      const checkboxSonstige = document.getElementById("sonstigeCheckbox");
       const details = document.getElementById("detailsField");
-      sonstigeCheckbox.addEventListener("change", function() {
+
+      checkboxSonstige.addEventListener("change", function() {
         details.style.display = this.checked ? "block" : "none";
       });
 
-      // Vor dem Absenden alle Checkboxen in Zulassung_vorhanden__c zusammenführen
+      // Semikolon-getrennte Liste für Salesforce zusammenführen
       const form = document.getElementById("leadForm");
       form.addEventListener("submit", function(e) {
-        const checkboxes = document.querySelectorAll(".zulassung");
-        const selected = [];
-        checkboxes.forEach(cb => { if(cb.checked) selected.push(cb.value); });
+        const checkboxes = form.querySelectorAll('input[name="Zulassungsart__c"]:checked');
+        const values = Array.from(checkboxes).map(cb => cb.value).join("; ");
+        // Lege Wert in verstecktes Feld
+        const hiddenField = document.createElement("input");
+        hiddenField.type = "hidden";
+        hiddenField.name = "Zulassungsart__c";
+        hiddenField.value = values;
+        form.appendChild(hiddenField);
 
-        // Sonstige berücksichtigen
-        if(sonstigeCheckbox.checked) {
-          const detailsInput = document.getElementById("Zulassungsdetails__c");
-          if(detailsInput.value.trim() !== "") selected.push(detailsInput.value.trim());
-        }
-
-        // Feld in SF setzen
-        let hiddenField = document.querySelector("input[name='Zulassung_vorhanden__c']");
-        if(!hiddenField) {
-          hiddenField = document.createElement("input");
-          hiddenField.type = "hidden";
-          hiddenField.name = "Zulassung_vorhanden__c";
-          form.appendChild(hiddenField);
-        }
-        hiddenField.value = selected.join("; ");
-
-        // Erfolgsmeldung
+        // Erfolgsmeldung anzeigen + Formular leeren
         const msg = document.getElementById("successMessage");
         msg.style.display = "block";
         setTimeout(() => form.reset(), 400);
-        setTimeout(() => msg.style.display = "none", 5000);
+        setTimeout(() => (msg.style.display = "none"), 5000);
       });
     </script>
   </body>
