@@ -1,101 +1,93 @@
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Pangaea Life – Zulassung erfassen</title>
-    <style>
-      body {
-        font-family: "Segoe UI", Roboto, Arial, sans-serif;
-        background: #f3f5f7;
-        margin: 0;
-        padding: 0;
-        color: #2b2b2b;
-      }
-      .container {
-        max-width: 560px;
-        margin: 5vh auto;
-        background: #fff;
-        padding: 28px 26px 32px;
-        border-radius: 14px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
-      }
-      h1 { color: #004a99; text-align: center; font-size: 1.5rem; margin-bottom: 12px; }
-      label { display: block; margin: 14px 0 6px; font-weight: 600; }
-      input[type="text"], input[type="checkbox"] { margin-bottom: 12px; }
-      input[type="text"] { width: 100%; padding: 12px; border-radius: 10px; border: 1px solid #d9dde3; font-size: 16px; }
-      .cta {
-        width: 100%;
-        padding: 15px;
-        font-size: 17px;
-        font-weight: 700;
-        border: 0;
-        border-radius: 12px;
-        color: #fff;
-        background: linear-gradient(90deg,#1b5ef5,#004a99);
-        cursor: pointer;
-        margin-top: 18px;
-      }
-      .success { display: none; color: #15803d; font-weight: 700; text-align: center; margin-top: 18px; }
-      .foot { font-size: 12px; text-align: center; color: #555; margin-top: 28px; }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>Zulassung erfassen</h1>
-      <p>Bitte teilen Sie uns Ihre Vermittlerzulassungen mit.</p>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pangaea Life – Zulassung erfassen</title>
+<style>
+body {margin:0;font-family:"Segoe UI", Roboto, Arial,sans-serif;background:#f3f5f7;color:#2b2b2b;}
+.container {max-width:560px;margin:5vh auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(0,0,0,0.08);}
+.header {background:linear-gradient(135deg,#004a99,#0b57c2);padding:28px 24px 22px;text-align:center;position:relative;}
+.logo {max-width:190px;height:auto;margin:0 auto 12px;display:block;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.2));}
+h1 {margin:18px 0 12px;text-align:center;color:#004a99;font-size:1.5rem;}
+p.lead {text-align:center;color:#6b7280;margin:0 auto 24px;font-size:15px;max-width:48ch;}
+label {display:block;margin:14px 0 6px;font-weight:600;}
+input[type="text"], input[type="checkbox"] {font-size:16px;box-sizing:border-box;}
+input[type="text"] {width:100%;padding:12px 14px;border:1px solid #d9dde3;border-radius:10px;background:#fff;}
+input[type="text"]:focus {border-color:#1b5ef5;box-shadow:0 0 0 3px rgba(27,94,245,0.15);outline:none;}
+.checkbox-group {display:flex;flex-direction:column;gap:10px;margin:12px 0;}
+.cta {margin-top:22px;width:100%;padding:15px;font-size:17px;font-weight:700;border:0;border-radius:12px;color:#fff;background:linear-gradient(90deg,#1b5ef5,#004a99);cursor:pointer;transition:all 0.2s ease;}
+.cta:hover {transform:translateY(-1px);box-shadow:0 8px 18px rgba(27,94,245,0.3);}
+.success {display:none;margin-top:18px;text-align:center;color:#15803d;font-weight:700;}
+.foot {background:#f0f2f5;border-top:1px solid #e0e4ea;padding:18px 14px;text-align:center;font-size:12px;color:#555;}
+</style>
+</head>
+<body>
+<div class="container">
+  <!-- HEADER -->
+  <div class="header">
+    <img class="logo" src="https://www.pangaea-life.de/.resources/bayerische-lm/webresources/pangaea-life/img/pangaea-life-logo-white.svg" alt="Pangaea Life">
+  </div>
 
-      <iframe name="hidden_iframe" style="display:none;"></iframe>
-      <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" target="hidden_iframe">
-        <input type="hidden" name="oid" value="00D06000001lc1a">
-        <input type="hidden" name="retURL" value="">
-        <input type="hidden" id="Lead_Id_External__c" name="Lead_Id_External__c">
+  <!-- CONTENT -->
+  <div class="content" style="padding:28px 26px 32px;">
+    <h1>Zulassung erfassen</h1>
+    <p class="lead">Bitte teilen Sie uns Ihre Vermittlerzulassung mit, damit wir Sie künftig gezielt informieren können.</p>
 
-        <!-- Checkboxen für Zulassungen -->
-        <label><input type="checkbox" name="Zulassung_34F1_GewO__c" value="Ja"> §34F1 GewO</label>
-        <label><input type="checkbox" name="Zulassung_X34F2_GewO__c" value="Ja"> §34F2 GewO</label>
-        <label><input type="checkbox" name="Zulassung_35D_GewO__c" value="Ja"> §35D GewO</label>
-        <label><input type="checkbox" id="sonstigeCheckbox" name="Zulassung_Sonstige__c" value="Ja"> Sonstige</label>
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"></iframe>
 
-        <!-- Textfeld für Sonstige -->
-        <input type="text" id="sonstigeText" name="Zulassung_Sonstige__c" placeholder="Bitte weitere Zulassungen eintragen" style="display:none;">
+    <form id="leadForm" action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8" method="POST" target="hidden_iframe">
+      <input type="hidden" name="oid" value="00D06000001lc1a" />
+      <input type="hidden" name="retURL" value="" />
+      <input type="hidden" id="Lead_Id_External__c" name="Lead_Id_External__c" />
 
-        <button class="cta" type="submit">Zulassung speichern</button>
-        <div class="success" id="successMessage">✅ Danke! Ihre Angaben wurden erfolgreich übermittelt.</div>
-      </form>
-    </div>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="Zulassung_34F1_GewO__c" value="true"> §34F1 GewO</label>
+        <label><input type="checkbox" name="Zulassung_X34F2_GewO__c" value="true"> §34F2 GewO</label>
+        <label><input type="checkbox" name="Zulassung_35D_GewO__c" value="true"> §35D GewO</label>
+        <label><input type="checkbox" id="Zulassung_Sonstige_Checkbox" name="Zulassung_Sonstige_Checkbox"> Sonstige</label>
+      </div>
 
-    <div class="foot">
-      <strong>Pangaea Life GmbH</strong><br>
-      Thomas-Dehler-Straße 25, 81737 München<br>
-      Telefon: +49 89 6787-0 | E-Mail: info@pangaea-life.de<br>
-      © 2025 Pangaea Life GmbH
-    </div>
+      <div id="sonstigeField" style="display:none;">
+        <label for="Zulassung_Sonstige__c">Sonstige Zulassung</label>
+        <input id="Zulassung_Sonstige__c" name="Zulassung_Sonstige__c" type="text" maxlength="80" placeholder="Bitte eintragen">
+      </div>
 
-    <script>
-      // Lead ID aus URL übertragen
-      (function() {
-        const params = new URLSearchParams(window.location.search);
-        const rawId = params.get("leadId") || "";
-        const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0,18);
-        document.getElementById("Lead_Id_External__c").value = cleanId;
-      })();
+      <button class="cta" type="submit">Zulassung speichern</button>
+      <div class="success" id="successMessage">✅ Danke! Ihre Angaben wurden erfolgreich übermittelt.</div>
+    </form>
+  </div>
 
-      // Textfeld anzeigen, wenn Sonstige angehakt
-      const chk = document.getElementById("sonstigeCheckbox");
-      const txt = document.getElementById("sonstigeText");
-      chk.addEventListener("change", () => {
-        txt.style.display = chk.checked ? "block" : "none";
-      });
+  <div class="foot">
+    <strong>Pangaea Life GmbH</strong><br/>
+    Thomas-Dehler-Straße 25, 81737 München<br/>
+    Telefon: +49 89 6787-0  |  E-Mail: info@pangaea-life.de<br/>
+    © 2025 Pangaea Life GmbH
+  </div>
+</div>
 
-      // Formular Submit
-      const form = document.getElementById("leadForm");
-      const msg = document.getElementById("successMessage");
-      form.addEventListener("submit", () => {
-        msg.style.display = "block";
-        setTimeout(() => form.reset(), 400);
-        setTimeout(() => msg.style.display="none", 5000);
-      });
-    </script>
-  </body>
+<script>
+(function() {
+  const params = new URLSearchParams(window.location.search);
+  const rawId = params.get("leadId") || "";
+  const cleanId = rawId.replace(/[^A-Za-z0-9]/g, "").slice(0,18);
+  const input = document.getElementById("Lead_Id_External__c");
+  if(input) input.value = cleanId;
+})();
+
+const sonstigeCheckbox = document.getElementById("Zulassung_Sonstige_Checkbox");
+const sonstigeField = document.getElementById("sonstigeField");
+sonstigeCheckbox.addEventListener("change", function() {
+  sonstigeField.style.display = this.checked ? "block" : "none";
+});
+
+const form = document.getElementById("leadForm");
+const msg = document.getElementById("successMessage");
+form.addEventListener("submit", () => {
+  msg.style.display = "block";
+  setTimeout(()=>form.reset(),400);
+  setTimeout(()=>msg.style.display="none",5000);
+});
+</script>
+</body>
 </html>
